@@ -60,7 +60,8 @@
   gap: 10px;
 }
 
-.header-btn {
+.header-btn,
+.registration-btn {
   display: flex;
   height: 42px;
   padding: 12px 23px;
@@ -68,7 +69,8 @@
   align-items: center;
   gap: 10px;
   border-radius: 8px;
-  background: var(--Primary-100, #3692ff);
+  border: none;
+  background: var(--Primary-100);
 }
 /* ----------main----------- */
 .main-frame {
@@ -187,7 +189,7 @@
   align-items: flex-start;
   gap: 10px;
   border-radius: 12px;
-  border: 1px solid var(--Cool-Gray-200, #e5e7eb);
+  border: 1px solid var(--Cool-Gray-200);
   background: #fff;
 }
 /*---------footer-------- */
@@ -199,7 +201,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  background: var(--Secondary-900, #111827);
+  background: var(--Secondary-900);
 }
 .footer-frame {
   display: flex;
@@ -225,13 +227,112 @@
 }
 
 .items {
-  display: flex;
   width: 1200px;
   height: 827px;
+  margin: 94px 360px 300px;
 }
 .items-frame {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
+}
+.items-products {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+.items-products-inner {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+.items-img {
+  width: 224px;
+  height: 297px;
+}
+.items-explain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  align-self: stretch;
+}
+.items-name,
+.items-heart {
+  display: flex;
+  width: 220px;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+.items-product {
+  display: flex;
+  width: 220px;
+  height: 319px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fcfcfc;
+}
+.page-frame {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.link {
+  color: inherit;
+  text-decoration-line: "none";
+}
+.Registration {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  margin: 94px 360px 322px;
+  align-items: flex-start;
+  gap: 24px;
+}
+.Registration-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1017px;
+  align-self: stretch;
+}
+.Registration-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+}
+.Registration-bottom-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+}
+.Registration-input-big {
+  display: flex;
+  width: 1200px;
+  height: 282px;
+  padding: 16px 24px;
+  align-items: flex-start;
+  text-align: unset;
+  gap: 10px;
+  border-radius: 12px;
+  background: var(--Cool-Gray-100);
+}
+.Registration-input-small {
+  display: flex;
+  height: 56px;
+  padding: 16px 24px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  background: var(--Cool-Gray-100);
 }

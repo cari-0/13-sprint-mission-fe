@@ -1,16 +1,23 @@
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./page/Header.jsx";
+import Products from "./page/Products.jsx";
+import Footer from "./page/Footer.jsx";
 import "./App.css";
-import Items from "./components/Items.jsx";
-
-function App() {
+import Items from "./page/Items.jsx";
+import Registration from "./page/Registration.jsx";
+import Home from "./page/Home.jsx";
+export default function App() {
   return (
-    <>
+    <div className="app">
       <Header />
-      <Items />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="Products" element={<Products />} />
+        <Route path="Items" element={<Items />} />
+        <Route path="Registration" element={<Registration />} />
+      </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
-
-export default App;

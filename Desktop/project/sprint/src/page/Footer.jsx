@@ -7,43 +7,43 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-frame">
-        <p className="footer-gray">©codeit - 2024</p>
+        <p className="secondary-400-16px">©codeit - 2024</p>
         <ul className="footer-inner-center">
           <li>
-            <a className="footer-white" href="./move/privacy.html">
+            <span className="secondary-200-16px" href="./move/privacy.html">
               Privacy Policy
-            </a>
+            </span>
           </li>
           <li>
-            <a className="footer-white" href="./move/FAQ.html">
+            <span className="secondary-200-16px" href="./move/FAQ.html">
               FAQ{" "}
-            </a>
+            </span>
           </li>
         </ul>
         <ul className="footer-right">
           <li>
-            <a href="http://www.facebook.com" target="_blank">
+            <span href="http://www.facebook.com" target="_blank">
               <img src={facebook} alt="페이스북이미지" className="footer-img" />
-            </a>
+            </span>
           </li>
           <li>
-            <a href="http://www.twitter.com" target="_blank">
+            <span href="http://www.twitter.com" target="_blank">
               <img src={twitter} alt="트위터이미지" className="footer-img" />
-            </a>
+            </span>
           </li>
           <li>
-            <a href="http://www.youtube.com" target="_blank">
+            <span href="http://www.youtube.com" target="_blank">
               <img src={youtube} alt="유튜브이미지" className="footer-img" />
-            </a>
+            </span>
           </li>
           <li>
-            <a href="http://www.instagram.com/" target="_blank">
+            <span href="http://www.instagram.com/" target="_blank">
               <img
                 src={instagram}
                 alt="인스타그램이미지"
                 className="footer-img"
               />
-            </a>
+            </span>
           </li>
         </ul>
       </div>

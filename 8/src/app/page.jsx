@@ -5,10 +5,10 @@ export default function Home() {
   return (
     <div>
       <li>
-        <Link href={"/l"}>로그인 페이지가기</Link>
+        <Link href={"/login"}>로그인 페이지가기</Link>
       </li>
       <li>
-        <Link href={"/p"}>상품 페이지가기</Link>
+        <Link href={"/items"}>상품 페이지가기</Link>
       </li>
     </div>
   );

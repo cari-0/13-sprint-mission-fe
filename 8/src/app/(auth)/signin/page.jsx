@@ -67,10 +67,12 @@ export default function Signinpage() {
 
   return (
     <div className="flex max-w-[640px] flex-col items-center gap-[40px] shrink-0 mx-auto my-auto">
-      <div className="flex">
-        <Image src={pandaFace} alt="Logoimage" width={100} height={100} />
-        <p className="text-[66px] font-bold text-[#3692FF]">판다마켓</p>
-      </div>
+      <Link href={"/"}>
+        <div className="flex">
+          <Image src={pandaFace} alt="Logoimage" width={100} height={100} />
+          <p className="text-[66px] font-bold text-[#3692FF]">판다마켓</p>
+        </div>
+      </Link>
       <form
         className="flex flex-col items-center gap-[24px] self-stretch"
         onSubmit={handleSubmit}

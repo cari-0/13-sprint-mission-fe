@@ -7,7 +7,7 @@ import pandaFace from "@/app/asset/pandaface.svg";
 import passwordOpen from "@/app/asset/btn_visibility_on.svg";
 import passwordClose from "@/app/asset/btn_visibility_off.svg";
 
-export default function Loginpage() {
+export default function Signinpage() {
   // 아이콘 눌러서 비밀번호 보기/숨기기
   const [showPassword, setShowPassword] = useState(false);
 
@@ -46,8 +46,6 @@ export default function Loginpage() {
                   이메일을 입력해주세요
                 </p>
               )}
-            </div>
-            <div className="flex flex-col items-start gap-[16px]">
               <p className="text-[18px] text-[#1F2937] font-medium">비밀번호</p>
               <div className="relative">
                 <input
@@ -98,7 +96,7 @@ export default function Loginpage() {
             판다마켓이 처음이신가요?
           </p>
           <Link
-            href={"/signin"}
+            href={"/signup"}
             className="text-[14px] text-[#3692FF] font-medium underline"
           >
             회원가입

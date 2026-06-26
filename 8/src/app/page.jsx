@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <li>
-        <Link href={"/login"}>로그인 페이지가기</Link>
+        <Link href={"/signin"}>로그인 페이지가기</Link>
       </li>
       <li>
         <Link href={"/items"}>상품 페이지가기</Link>

@@ -7,15 +7,16 @@ import Link from "next/link";
 import pandaFace from "@/app/asset/pandaface.svg";
 import passwordOpen from "@/app/asset/btn_visibility_on.svg";
 import passwordClose from "@/app/asset/btn_visibility_off.svg";
+import { useRouter } from "next/navigation";
 
-export default function Signinpage() {
+export default function SignupPage() {
   // 아이콘 눌러서 비밀번호 보기/숨기기
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   // 회원가입 버튼 클릭 시 검증
   const [email, setEmail] = useState("");
-  const [emailError, setEamilError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const [nickname, setNickname] = useState("");
   const [nicknameError, setNicknameError] = useState(false);
@@ -23,25 +24,57 @@ export default function Signinpage() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
 
-  const handleSign = () => {
-    //이메일
-    email.trim() == "" ? setEamilError(true) : setEamilError(false);
-    //닉네임
-    nickname.trim().length < 1
-      ? setNicknameError(true)
-      : setNicknameError(false);
-    // 비밀번호
-    password.length < 8 ? setPasswordError(true) : setPasswordError(false);
-    // 비밀번호 확인
-    password !== passwordConfirm
-      ? setPasswordConfirmError(true)
-      : setPasswordConfirmError(false);
+  const router = useRouter();
 
-    // 로그인 API 호출
-  };
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const emailValid = email.trim() !== "";
+    const nicknameValid = nickname.trim() !== "";
+    const passwordValid = password.length >= 8;
+    const passwordConfirmValid = password === passwordConfirmation;
+
+    setEmailError(!emailValid);
+    setNicknameError(!nicknameValid);
+    setPasswordError(!passwordValid);
+    setPasswordConfirmError(!passwordConfirmValid);
+
+    if (
+      !emailValid ||
+      !nicknameValid ||
+      !passwordValid ||
+      !passwordConfirmValid
+    ) {
+      return;
+    }
+
+    // 회원가입 API 호출
+    const response = await fetch(
+      "https://panda-market-api.vercel.app/auth/signUp",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          nickname,
+          password,
+          passwordConfirmation,
+        }),
+      },
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message ?? "회원가입에 실패했습니다.");
+      return;
+    }
+    router.push("/signin");
+  }
 
   return (
     <div className="flex max-w-[640px] flex-col items-center gap-[40px] shrink-0 mx-auto my-auto">
@@ -49,11 +82,16 @@ export default function Signinpage() {
         <Image src={pandaFace} alt="Logoimage" width={100} height={100} />
         <p className="text-[66px] font-bold text-[#3692FF]">판다마켓</p>
       </div>
-      <div className="flex flex-col items-center gap-[24px] self-stretch">
+      <form
+        className="flex flex-col items-center gap-[24px] self-stretch"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col items-start gap-[24px]">
           <div className="flex flex-col items-start gap-[24px]">
             <div className="flex flex-col items-start gap-[16px]">
-              <p className="text-[18px] text-[#1F2937] font-medium">이메일</p>
+              <label className="text-[18px] text-[#1F2937] font-medium">
+                이메일
+              </label>
               <input
                 className="bg-[#F3F4F6] w-[640px] h-[56px] flex px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
                 placeholder="이메일을 입력해주세요"
@@ -66,7 +104,9 @@ export default function Signinpage() {
                   이메일을 입력해주세요
                 </p>
               )}
-              <p className="text-[18px] text-[#1F2937] font-medium">닉네임</p>
+              <label className="text-[18px] text-[#1F2937] font-medium">
+                닉네임
+              </label>
               <input
                 className="bg-[#F3F4F6] w-[640px] h-[56px] flex px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
                 placeholder="닉네임을 입력해주세요"
@@ -79,9 +119,9 @@ export default function Signinpage() {
                   닉네임을 입력해주세요
                 </p>
               )}
-            </div>
-            <div className="flex flex-col items-start gap-[16px]">
-              <p className="text-[18px] text-[#1F2937] font-medium">비밀번호</p>
+              <label className="text-[18px] text-[#1F2937] font-medium">
+                비밀번호
+              </label>
               <div className="relative">
                 <input
                   className="bg-[#F3F4F6] flex w-[640px] h-[56px] px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
@@ -110,16 +150,16 @@ export default function Signinpage() {
                 </p>
               )}
 
-              <p className="text-[18px] text-[#1F2937] font-medium">
+              <label className="text-[18px] text-[#1F2937] font-medium">
                 비밀번호 확인
-              </p>
+              </label>
               <div className="relative">
                 <input
                   className="bg-[#F3F4F6] flex w-[640px] h-[56px] px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
                   placeholder="비밀번호를 입력해주세요"
                   type={showPasswordConfirm ? "text" : "password"}
-                  value={passwordConfirm}
-                  onChange={(e) => setPasswordConfirm(e.target.value)}
+                  value={passwordConfirmation}
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
                 />
                 <button
                   type="button"
@@ -141,10 +181,7 @@ export default function Signinpage() {
               )}
             </div>
           </div>
-          <button
-            onClick={handleSign}
-            className="bg-[#9CA3AF] flex w-[640px] h-[56px] justify-center items-center gap-[10px] rounded-[40px]"
-          >
+          <button className="bg-[#9CA3AF] flex w-[640px] h-[56px] justify-center items-center gap-[10px] rounded-[40px]">
             <p className="text-[20px] text-[#F3F4F6] font-medium ">회원가입</p>
           </button>
         </div>
@@ -157,7 +194,7 @@ export default function Signinpage() {
           </div>
         </div>
         <div className="flex items-center justify-center gap-[4px]">
-          <p className="text[14px] text-[#1F2937] font-medium">
+          <p className="text-[14px] text-[#1F2937] font-medium">
             이미 회원이신가요?
           </p>
           <Link
@@ -167,7 +204,7 @@ export default function Signinpage() {
             로그인
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Link from "next/link";
 import pandaFace from "@/app/asset/pandaface.svg";
 import passwordOpen from "@/app/asset/btn_visibility_on.svg";
 import passwordClose from "@/app/asset/btn_visibility_off.svg";
+import { useRouter } from "next/navigation";
 
 export default function Signinpage() {
   // 아이콘 눌러서 비밀번호 보기/숨기기
@@ -14,13 +15,54 @@ export default function Signinpage() {
   // 로그인 버튼 클릭 시 검증
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [eamilError, setEamilError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const handleLogin = () => {
-    email.trim() == "" ? setEamilError(true) : setEamilError(false);
-    password.length < 8 ? setPasswordError(true) : setPasswordError(false);
 
-    // 로그인 API 호출
+  // 페이지 이동
+  const router = useRouter();
+
+  // 로그인핸들러
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const emailValid = email.trim() !== "";
+    const passwordValid = password.length >= 8;
+
+    setEmailError(!emailValid);
+    setPasswordError(!passwordValid);
+
+    if (!emailValid || !passwordValid) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://panda-market-api.vercel.app/auth/signIn",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message ?? "로그인에 실패했습니다.");
+        return;
+      }
+
+      //토큰저장
+      localStorage.setItem("accessToken", data.accessToken);
+      router.push("/items");
+    } catch (error) {
+      alert("네트워크 오류가 발생했습니다.");
+    }
   };
 
   return (
@@ -29,11 +71,16 @@ export default function Signinpage() {
         <Image src={pandaFace} alt="Logoimage" width={100} height={100} />
         <p className="text-[66px] font-bold text-[#3692FF]">판다마켓</p>
       </div>
-      <div className="flex flex-col items-center gap-[24px] self-stretch">
+      <form
+        className="flex flex-col items-center gap-[24px] self-stretch"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col items-start gap-[24px]">
           <div className="flex flex-col items-start gap-[24px]">
             <div className="flex flex-col items-start gap-[16px]">
-              <p className="text-[18px] text-[#1F2937] font-medium">이메일</p>
+              <label className="text-[18px] text-[#1F2937] font-medium">
+                이메일
+              </label>
               <input
                 className="bg-[#F3F4F6] w-[640px] h-[56px] flex px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
                 placeholder="이메일을 입력해주세요"
@@ -41,12 +88,14 @@ export default function Signinpage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {eamilError && (
+              {emailError && (
                 <p className="text-[14px] text-[#F74747] font-medium">
                   이메일을 입력해주세요
                 </p>
               )}
-              <p className="text-[18px] text-[#1F2937] font-medium">비밀번호</p>
+              <label className="text-[18px] text-[#1F2937] font-medium">
+                비밀번호
+              </label>
               <div className="relative">
                 <input
                   className="bg-[#F3F4F6] flex w-[640px] h-[56px] px-[16px] py-[24px] items-center gap-[10px] rounded-[12px]"
@@ -76,10 +125,7 @@ export default function Signinpage() {
               )}
             </div>
           </div>
-          <button
-            onClick={handleLogin}
-            className="bg-[#9CA3AF] flex w-[640px] h-[56px] justify-center items-center gap-[10px] rounded-[40px]"
-          >
+          <button className="bg-[#9CA3AF] flex w-[640px] h-[56px] justify-center items-center gap-[10px] rounded-[40px]">
             <p className="text-[20px] text-[#F3F4F6] font-medium ">로그인</p>
           </button>
         </div>
@@ -92,7 +138,7 @@ export default function Signinpage() {
           </div>
         </div>
         <div className="flex items-center justify-center gap-[4px]">
-          <p className="text[14px] text-[#1F2937] font-medium">
+          <p className="text-[14px] text-[#1F2937] font-medium">
             판다마켓이 처음이신가요?
           </p>
           <Link
@@ -102,7 +148,7 @@ export default function Signinpage() {
             회원가입
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

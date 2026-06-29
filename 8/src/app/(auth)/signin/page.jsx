@@ -59,6 +59,8 @@ export default function Signinpage() {
 
       //토큰저장
       localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("nickname", data.user.nickname);
       router.push("/items");
     } catch (error) {
       alert("네트워크 오류가 발생했습니다.");
